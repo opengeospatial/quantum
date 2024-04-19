@@ -1,0 +1,19 @@
+
+== Discussion
+
+The geospatial and space domains contain a multitude of optimization problems that QC can address in its current state with problem sizes increasing in the future. The work described in this discussion paper has provided some examples of where quantum optimization could be advantageous now, and in the future. Although quantum computers are not powerful and coherent enough to provide a large uplift in processing power and an increase in speed, practical quantum computing is now possible for experimentation and future proofing.
+
+
+
+== Recommendations
+
+Quantum is part of a geospatial workflow
+
+It has potential and should be explored for geo
+
+Make use of the hybrid approach and see what that does.
+
+Appropriate use of the technology
+
+
+== Conclusions
