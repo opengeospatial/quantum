@@ -72,9 +72,13 @@ As TSP is a typical geospatial problem, D-Wave has a call that can be made to a 
 
 As part of the experiment two cost matrices were generated, one using straight line distance and one using the road network.
 
+image::figures/TSP.jpg[]
+
 ==== TSP Results
 
 The AQC was able to quickly compute the correct route for 5 cities but often failed with 8 cities. As the ADQ is non-deterministic and has some noise in the system, it occasionally produces invalid results such as visiting the same destination twice. When compared to the classical method of doing TSP, the quantum approach is orders of magnitude quicker showing promise for the technology in this space.
+
+image::figures/TSP2.jpg[]
 
 === Structural Imbalance within a Graph
 
@@ -95,6 +99,12 @@ The relationships that break the friendly/hostile rules are considered _frustrat
 
 A typical example for this type of problem is Romeo & Juliet. At the beginning of the play, the characters sit in a perfectly balanced graph, all of the Montague and Capulet families have positive relationships within their families, and all relationships between the individuals of the two families are negative. As the story progresses, a frustrated relationship emerges with the title characters. If the relationship between the title characters is updated to reflect their positive interactions and the algorithm is re-run, the relationship is flagged as being frustrated, the two characters are in a friendly relationship when they _should_ be hostile. This matters because these frustrated relationships can be a predictor of conflict as they are in this story, but also in real life examples.
 
+image::figures/RandJ1.jpg[]
+
+image::figures/RandJ_Graph.jpg[]
+
+image::figures/RandJgraph_class.jpg[]
+
 
 ==== A real world geospatial example
 
@@ -105,7 +115,7 @@ Applying SIP to geospatial use cases requires:
 
 An experiment was carried out using some world terrorist incident data, again provided by D-Wave. As with the TSP example, the objective of this piece of work was to integrate AQC and SIP with geospatial technologies to take advantage of geospatial intelligence with AQC to make some observations about patterns found in the data. A note on the parameters for the data is that the dataset was considered as a whole and not split regionally, which is something that maybe done in a real world scenario. Additionally, due to the large number of data points, the problem set is too large for the QPU alone and a _hybrid solver_ was used instead. Hybrid solvers as the name suggests use a combination of classical and quantum technologies to solve larger problems than a pure QPU could do alone. Exactly how the problem is split up is not described in detail, however it does appear to produce timely and accurate results. 
 
-<image in here>
+image::figures/terrorism.jpg[]
 
 Although the grouping created by the AQC are arbitrary, as the dataset has an unconsidered temporal element, it does highlight areas of the world with many frustrated relationships. The Middle East region is particularly challenging with many frustrated relationships that can be a source of conflict.
 
@@ -130,9 +140,9 @@ Satellite usage and placement in a constellation is an interesting and geospatia
 
 An additional concern with this is to do with cost as there is a cost associated with not observing the location and equally, there is a cost associated with making changes to a satellite. The model seeks to balance the cost of not observing the location at a time with the cost of operating the satellite, it then selects the satellites to use from within the constellation to the monitoring.
 
-In the above example, requiring a coverage of 2, that is, the geographic area should be observed by at least two satellites at the required time slice given the penalty for _not_ observing the location, and the cost of using the satellite. If we run this using the QC, the algorithm reports that satellites 0 and 1 are required. If we up the coverage requirement to 3, then the algorithm reports that all of the satellites are required
+In the above example, requiring a coverage of 2, that is, the geographic area should be observed by at least two satellites at the required time slice given the penalty for _not_ observing the location, and the cost of using the satellite. If we run this using the QC, the algorithm reports that satellites 0 and 1 are required. If we up the coverage requirement to 3, then the algorithm reports that all of the satellites are required. After proving the concept, a further experiment was conducted using 25 satellites and 10 time slices. Again, by manipulating the penalties and costs for satellite coverage and usage respectively, solutions were generated that included most, many, some and a single satellite depending on the requirements.
 
-Although this is quite an immature and simplified experiment, the costs, penalties and use of coverage variables have real-world applications that can optimize satellite constellation coverage. This is particularly salient with respect to the new, small satellites such as Starlink being launched as well as cubesats and other low weight, low cost devices being put into orbit.
+Although this is quite an immature and simplified experiment, the costs, penalties and use of coverage variables have real-world applications that can optimize satellite constellation coverage. This is particularly salient with respect to the new, small satellites such as Starlink being launched as well as cubesats and other low weight, low cost devices being put into orbit. The next step in this experimentation is to use _real_ satellite data including costs and penalties to create a constellation and then measure the constellation against the existing constellations.
 
 
 == Potential Standardization Routes

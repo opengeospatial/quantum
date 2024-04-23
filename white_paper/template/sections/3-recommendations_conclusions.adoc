@@ -1,19 +1,27 @@
 
 == Discussion
 
-The geospatial and space domains contain a multitude of optimization problems that QC can address in its current state with problem sizes increasing in the future. The work described in this discussion paper has provided some examples of where quantum optimization could be advantageous now, and in the future. Although quantum computers are not powerful and coherent enough to provide a large uplift in processing power and an increase in speed, practical quantum computing is now possible for experimentation and future proofing.
+The geospatial and space domains contain a multitude of optimization problems that QC can address in its current state with problem sizes increasing in the future. The work described in this discussion paper has provided some examples of where quantum optimization could be advantageous now, and in the future. Although quantum computers are not powerful and coherent enough to provide a large uplift in processing power and an increase in speed, practical quantum computing is now possible for experimentation and future proofing. In terms of proving a quantum speed up, there are some clear use cases, especially in the logistics domain that have shown clear advantages to use quantum or hybrid solvers. A D-Wave demo involves routing 5 different drivers to satisfy delivery of multiple packages to different locations. This is a very hard problem for classical computers to solve as it involves multiple instantiations of TSP across multiple people. When directly compared to K-Means clustering, the quantum-hybrid algorithm saves around a quarter of the mileage. These types of gains in quantum optimization can make a difference to organization as they currently stand.
+
+Creation and execution of quantum optimization problems can be reduced to either a BQM or a QUBO. These are useful constructs as having a generic approach to describing problems through generalized calls and abstracted data structures implies that standardization could be a useful exercise for geospatial optimization problems.
 
 
 
 == Recommendations
 
-Quantum is part of a geospatial workflow
+From the three use case areas discussed, here are some recommendations:
 
-It has potential and should be explored for geo
+* Quantum computing has a role to play in solving complex, geospatial optimization problems now and in the future. However, quantum computing is not a replacement for classical approaches and should be used as part of a workflow. Quantum computing should be integrated into more appropriate geospatial workflows.
 
-Make use of the hybrid approach and see what that does.
+* There are many geospatial optimization problems can be solved using quantum with the potential to provide an advantage. A list of optimization use cases should be gathered from the geospatial community to focus further research into this emerging technology.
 
-Appropriate use of the technology
+* The immediate uplift in capability is likely to come through using a hybrid solver. The principle of using the hybrid is to task a classical computer with solving the problem that they executes the quantum computer on the user's behalf. This is a scalable approach to QC that is available now with reported use of millions of entities and hundreds of thousands of variables. The primary interaction with the D-Wave quantum computer should be the hybrid solver, as it enables quantum computing technologies to solve problems of a useful size potentially providing quantum advantage.
+
+* Quantum annealing cannot be treated as a generalized computing resource as it utilizes quantum tunnelling to find the optimal solution amongst many possible solutions, but cannot be applied to problems such as search, factoring large numbers, or machine learning algorithms (although it maybe used for sample selection).
+
+* The OGC should consider the role standardization could play in quantum computing and quantum technologies more widely. A Domain Working Group (DWG) maybe palatable to support these emerging technologies.
 
 
 == Conclusions
+
+Quantum computing and related quantum technologies such as cryptography and sensing have varying levels of maturity and have implications for the geospatial domain and standardization. This paper has sought to explore some of these possibilities through experimentation and integration with geospatial technologies to provide results with current quantum machines. The integration path is manageable, and optimization problems should be explored further as the hardware increases capability. Although quantum computers can be executed directly, a near term advantage is found through the use of _hybrid solvers_ which use both classical and quantum capabilities to manage larger problems than a QPU alone could manage.
