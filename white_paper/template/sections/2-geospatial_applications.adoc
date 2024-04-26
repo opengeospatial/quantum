@@ -1,13 +1,13 @@
 == Geospatial Applications
 
-The Open Geospatial Consortium (OGC) is a longstanding and premier standards body for the geospatial industry. With over 20 years of history, the OGC has been a thought leader in emerging technologies and whose standards have facilitated interoperability across IT enterprises and seen wide adoption in industry leading products and governmental organizations.
+The OGC is a longstanding and premier standards body for the geospatial industry. With over 20 years of history, the OGC has been a thought leader in emerging technologies and whose standards have facilitated interoperability across IT enterprises and seen wide adoption in industry leading products and governmental organizations.
 
 As discussed in previous sections, the geospatial domain has many problems that maybe addressable by QC. For example, geospatial data has always been _large_, long before the concept of _big data_ and finding items with fast search algorithms has been a topic of interest for some time, especially when spatial operators are involved which increases the complexity. Beyond search is the concept of _optimization_, which is broadly the solving of complex computations to find the _best_ solution given a very large number of potential solutions. From a geospatial perspective this includes the following:
 
 . Routing - given the possibility of many routes, which is the optimal?
 . Optimal location planning - given a list of possible locations, where should I place my services to give the largest number of people access within a time constraint?
 . Geospatial relationships - given a list of locations, people, and relationships between them what patterns can be discerned?
-. Knowledge graphs - given a number of entities and relationships, what is the optimal path to get from a to be given c and d?
+. Knowledge graphs - given a number of entities and relationships, what is the optimal path to get from _A_ to _B_ given _C_ and _d_?
 . Orbital mechanics and communications - what is the optimal constellation of satellites given these constraints? 
 
 Optimization problems are often transferrable to other, adjacent problems, and because many of these problems are well known and reducible to other problems, the programming required to express them in quantum terms is often reduced to a call to a server with parameters rather than starting from first principles.
@@ -18,7 +18,7 @@ The following sections outline the general approach to AQC for solving optimizat
 
 Not all optimization problems are the same but they do have some commonalities, the main one being that there are many solutions to the problems stated and finding the correct (optimal) one is the challenge because of the number possible solutions available. Many optimization problems have a factorial (noted as n!) component within them. This means that for every layer of complexity, node, destination, relationship, or variable added to the problem makes finding the solution exponentially more complex. An often cited example is the number of possible calculations in a standard deck of 52 cards, this is clearly 52!. The result of this calculation is 8.1x10^67 possible combinations of a deck of 52 cards, the result of this is that every single deck of cards that has every existed and will ever exist is likely a unique ordering of the deck (provided that it's shuffled correctly). 
 
-The _deck of cards_ type problem shows that even with a relatively small number of nodes problems can quickly become unfeasible for the classical computing approach. 
+The _deck of cards_ example shows that even with a relatively small number of nodes problems can quickly become unfeasible for the classical computing approach. 
 
 == Optimization approaches
 
@@ -26,13 +26,9 @@ Binary Quadratic Models (BQMs) are a general method of mathematically expressing
 
 == Use Cases
 
-This section outlines three geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB) plugin for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the integration exercises.
-
-<website>
+This section outlines three geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB) plugin for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the integration exercises [link::https://github.com/dwave-examples].
 
 All of the problems stated are _at least_ NP hard (from the famous P=NP consideration), with Traveling Salesperson Problem potentially being NP Complete according to some sources. This paper does not discuss the implications for NP completeness apart from to provide evidence that the optimization problems discussed are indeed _difficult_ for classical computers. 
-
-<sources in here>
 
 === Traveling Salesperson Problem
 
@@ -51,7 +47,7 @@ There are several ways to generate _cost_ and may include:
 
 Considering a _symmetrical_ cost matrix, that is, point A to point B costs the same to travel between as point B to point A, the mathematical formulation of the problem is as follows:
 
-(n-1)!/2
+stem:: (n-1)!/2
 
 An asymmetrical cost matrix would have an even larger problem space as it would not have the divide by 2 in the formula. The result of this formula is that:
 
@@ -59,7 +55,7 @@ An asymmetrical cost matrix would have an even larger problem space as it would 
 * A 10 city problem has 181,440 possible routes.
 * A 100 city problem has 4.7x10^155 possible routes.
 
-As described, the number of possible routes quickly becomes unmanageable for classical computers to solve. Additionally this number of destinations maybe a problem with applicability in the real-world (considering large logistical operations such as Amazon).
+As described, the number of possible routes quickly becomes unmanageable for classical computers to solve. Additionally this number of destinations maybe a problem with applicability in the real-world (considering large logistical operations such as Amazon). The problem becomes more challenging when the number of drivers also increases and the problem becomes allocation of drivers to deliveries _and_ the routing concerns with TSP.
 
 A caveat to this problem is that the comparison done is between the brute force version of the classical TSP algorithm (i.e., trying all of the combinations and picking the least cost). In logistics, there are many methods of solving this algorithm that are more efficient such as place aggregation, use of heuristics or other methods of reducing the problem to a manageable size. Therefore the overall utility of AQC in this space is left to the logistics domain experts to judge.
 
@@ -82,11 +78,13 @@ image::figures/TSP2.jpg[]
 
 === Structural Imbalance within a Graph
 
-The Structural Imbalance Problem (SIP) is a special case of the _maximum cut_ problem, which is a method of classifying graphs into two groups of vertices where the optimal solution is the one that maximizes the number of edges between the two groups. SIP seeks to classify graphs (usually social networks) using the rule "the enemy of my friend is my enemy".
+Although not a strictly geospatial construct, the use of knowledge graphs in the geospatial domain and the OGC means that they can be used to represent geospatial information with one of the links between entities being locational _nearness_ or otherwise. This use case uses geospatial analytics to contextualize the results of the quantum output. In future work, location could be used as an input to this type of algorithm.
+
+The Structural Imbalance Problem (SIP) is a special case of the _maximum cut_ problem, which is a method of classifying graphs into two groups of vertices where the optimal solution is the one that maximizes the number of edges between the two groups. SIP seeks to classify graphs (usually social networks) using the rule "the enemy of my friend is my enemy". This is a simplification of real social networks, as there are many instances when individual relationships are more complex than _enemy_ or _friend_, however it is useful for identifying those problematic relationships that go against how they _should_ behave according to the model. Additionally, the geography of those relationships can provide some insight into regional events and trends.
 
 The mathematical formulation of SIP is as follows:
 
-Minimize ∑ (i,j)∈E-wij xi xj
+stem:: Minimize ∑ (i,j)∈E-wij xi xj
 
 This involves minimizing the objective function according to the positive (friendly) and negative (adversarial) relationships between the entities in the graph. The algorithm can result in two sets of results:
 
@@ -95,11 +93,11 @@ This involves minimizing the objective function according to the positive (frien
 
 The relationships that break the friendly/hostile rules are considered _frustrated_.
 
+image::figures/RandJ1.jpg[]
+
 ==== A simple Shakespearean Example
 
 A typical example for this type of problem is Romeo & Juliet. At the beginning of the play, the characters sit in a perfectly balanced graph, all of the Montague and Capulet families have positive relationships within their families, and all relationships between the individuals of the two families are negative. As the story progresses, a frustrated relationship emerges with the title characters. If the relationship between the title characters is updated to reflect their positive interactions and the algorithm is re-run, the relationship is flagged as being frustrated, the two characters are in a friendly relationship when they _should_ be hostile. This matters because these frustrated relationships can be a predictor of conflict as they are in this story, but also in real life examples.
-
-image::figures/RandJ1.jpg[]
 
 image::figures/RandJ_Graph.jpg[]
 
@@ -124,7 +122,14 @@ Although the grouping created by the AQC are arbitrary, as the dataset has an un
 
 As optimization can be applied to typical geospatial operations, they can also be applied to any domain where there is a problem with many correct solutions but one being optimal.
 
-Organization, monitoring and controlling satellites whilst taking note of other orbital objects such as space debris contains many optimization problems. Conceptually there are many ways to configure a constellation to achieve certain goals, but there is an optimal solution. The complexity and number of permutations that bodies can be organized implies a proper solution.
+Organization, monitoring and controlling satellites whilst taking note of other orbital objects such as space debris contains many optimization problems. Conceptually there are many ways to configure a constellation to achieve certain goals, but there is an optimal solution. Some satellite optimization problems that could be solved using AQC are as follows:
+
+* Coverage Optimization: Ensuring maximum coverage of specific areas on Earth.
+* Communication Links: Maximizing the efficiency of communication links between satellites.
+* Fuel Efficiency: Minimizing fuel consumption for manoeuvres.
+* Redundancy and Resilience: Ensuring the constellation can withstand the failure of one or more satellites.
+
+The example described in section has a combination of coverage optimization and redundancy and resilience, however, the parameters could be changed and weighted to favor one element over another if _real_ data were being used.
 
 ==== Satellite constellation placement optimization
 
@@ -156,3 +161,4 @@ From an OGC Standards perspective, standardizing calls to an AQC is likely to be
 * Peripheral parameters - number of times to run the computation.
 * Return types - solutions or raw energy states. 
 
+Whether standardization is possible or desirable given the manner that AQCs work will become apparent as the technology matures and becomes adopted over time.
