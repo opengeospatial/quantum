@@ -9,7 +9,7 @@ Creation and execution of quantum optimization problems can be reduced to either
 
 == Recommendations
 
-From the background and three use case areas discussed, here are some recommendations:
+From the background and three use case areas discussed, here are some findings are recommendations:
 
 * Quantum computing has a role to play in solving complex, geospatial optimization problems now and in the future. However, quantum computing is not a replacement for classical approaches and should be used as part of a workflow. Quantum computing should be integrated into more appropriate geospatial workflows.
 
