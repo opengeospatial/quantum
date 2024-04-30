@@ -22,11 +22,11 @@ The _deck of cards_ example shows that even with a relatively small number of no
 
 == Optimization approaches
 
-Binary Quadratic Models (BQMs) are a general method of mathematically expressing optimization problems, the D-Wave system uses these extensively. The quantum approach to using BQMs is to express variables as a binary (0 or 1) and then focuses on optimizing quadratic functions of these variables. A BQM represents the energy state of a system with the QC tasked with minimizing or maximizing the energy state depending on the problem expressed. Like a BQM, which can manage constrained and unconstrained variables, a Quadratic Unconstrained Binary Optimization (QUBO) maybe used when the problem space is open, however, the same principle applies with the AQC tasked with minimizing or maximizing the energy state to produce the solution, which is represented by the state of the machine when the optimization is completed.
+Binary Quadratic Models (BQMs) are a general method of mathematically expressing optimization problems; the D-Wave system uses these extensively. The quantum approach to using BQMs is to express variables as a binary (0 or 1) and then focus on optimizing quadratic functions of these variables. A BQM represents the energy state of a system with the QC tasked with minimizing or maximizing the energy state depending on the problem expressed. Like a BQM, which can manage constrained and unconstrained variables, a Quadratic Unconstrained Binary Optimization (QUBO) maybe used when the problem space is open, however, the same principle applies with the AQC tasked with minimizing or maximizing the energy state to produce the solution, which is represented by the state of the machine when the optimization is completed.
 
 == Use Cases
 
-This section outlines three geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB) plugin for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the integration exercises [link::https://github.com/dwave-examples].
+This section outlines three geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB), plugins for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the integration exercises [link::https://github.com/dwave-examples].
 
 All of the problems stated are _at least_ NP hard (from the famous P=NP consideration), with Traveling Salesperson Problem potentially being NP Complete according to some sources. This paper does not discuss the implications for NP completeness apart from to provide evidence that the optimization problems discussed are indeed _difficult_ for classical computers. 
 
@@ -34,11 +34,11 @@ All of the problems stated are _at least_ NP hard (from the famous P=NP consider
 
 The Traveling Salesperson Problem (TSP) is typical in geospatial and logistics. There are different formulations, the one used in this experiment is as follows:
 
-. There is a salesperson with a known start locations.
+. There is a salesperson with a known start location.
 . There are a number of locations that the salesperson must visit.
 . The solution is reached when the salesperson visits each of the locations once and only once in the lowest _cost_ possible.
 
-There are several ways to generate _cost_ and may include:
+There are several ways to generate _cost_ which may include:
 
 * Straight line distance.
 * Drive time.
@@ -47,7 +47,7 @@ There are several ways to generate _cost_ and may include:
 
 Considering a _symmetrical_ cost matrix, that is, point A to point B costs the same to travel between as point B to point A, the mathematical formulation of the problem is as follows:
 
-stem:: (n-1)!/2
+stem::(n-1)!/2
 
 An asymmetrical cost matrix would have an even larger problem space as it would not have the divide by 2 in the formula. The result of this formula is that:
 
@@ -84,7 +84,7 @@ The Structural Imbalance Problem (SIP) is a special case of the _maximum cut_ pr
 
 The mathematical formulation of SIP is as follows:
 
-stem:: Minimize ∑ (i,j)∈E-wij xi xj
+stem::Minimize ∑ (i,j)∈E-wij xi xj
 
 This involves minimizing the objective function according to the positive (friendly) and negative (adversarial) relationships between the entities in the graph. The algorithm can result in two sets of results:
 
@@ -111,11 +111,11 @@ Applying SIP to geospatial use cases requires:
 . A geospatially enabled dataset.
 . A knowledge graph technology that can handle geospatial operators.
 
-An experiment was carried out using some world terrorist incident data, again provided by D-Wave. As with the TSP example, the objective of this piece of work was to integrate AQC and SIP with geospatial technologies to take advantage of geospatial intelligence with AQC to make some observations about patterns found in the data. A note on the parameters for the data is that the dataset was considered as a whole and not split regionally, which is something that maybe done in a real world scenario. Additionally, due to the large number of data points, the problem set is too large for the QPU alone and a _hybrid solver_ was used instead. Hybrid solvers as the name suggests use a combination of classical and quantum technologies to solve larger problems than a pure QPU could do alone. Exactly how the problem is split up is not described in detail, however it does appear to produce timely and accurate results. 
+An experiment was carried out using some world terrorist incident data, again provided by D-Wave. As with the TSP example, the objective of this piece of work was to integrate AQC and SIP with geospatial technologies to take advantage of geospatial intelligence with AQC to make some observations about patterns found in the data. A note on the parameters for the data is that the dataset was considered as a whole and not split regionally, which is something that could be done in a real world scenario. Additionally, due to the large number of data points, the problem set is too large for the QPU alone and a _hybrid solver_ was used instead. Hybrid solvers, as the name suggests, use a combination of classical and quantum technologies to solve larger problems than a pure QPU could do alone. Exactly how the problem is split up is not described in detail, however it does appear to produce timely and accurate results. 
 
 image::figures/terrorism.jpg[]
 
-Although the grouping created by the AQC are arbitrary, as the dataset has an unconsidered temporal element, it does highlight areas of the world with many frustrated relationships. The Middle East region is particularly challenging with many frustrated relationships that can be a source of conflict.
+In the image above, the red lines show relationships that are hostile, but should be friendly, and the green lines show relationships that are friendly, but should be hostile. Although the grouping created by the AQC are arbitrary, as the dataset has an unconsidered temporal element, it does highlight areas of the world with many frustrated relationships. The Middle East region is particularly challenging with many frustrated relationships that can be a source of conflict.
 
 
 === Space example
@@ -126,14 +126,14 @@ Organization, monitoring and controlling satellites whilst taking note of other 
 
 * Coverage Optimization: Ensuring maximum coverage of specific areas on Earth.
 * Communication Links: Maximizing the efficiency of communication links between satellites.
-* Fuel Efficiency: Minimizing fuel consumption for manoeuvres.
+* Fuel Efficiency: Minimizing fuel consumption for maneuvers.
 * Redundancy and Resilience: Ensuring the constellation can withstand the failure of one or more satellites.
 
-The example described in section has a combination of coverage optimization and redundancy and resilience, however, the parameters could be changed and weighted to favor one element over another if _real_ data were being used.
+The example described in this Section has a combination of coverage optimization and redundancy and resilience, however, the parameters could be changed and weighted to favor one element over another if _real_ data were being used.
 
 ==== Satellite constellation placement optimization
 
-Satellite usage and placement in a constellation is an interesting and geospatially adjacent issue what AQC can help with. Although it is inherently a geospatial issue with respect to observing a patch of the earth, the problem can be simplified into a QUBO as mentioned previously. The role of geospatial technologies and data is to provide intelligence into the input data. The example shown here does not use information about satellite orbits and periods, it simply assumes that a constellation of satellites can observe a location at a given time. Whether a satellite can observe a location is represented as simple binary, 1 for it can observe and 0 it cannot observe the location. Additionally, the temporal element is considered as slices, the matrix provides 5 time slices and the binary describes whether the satellite can view the location. For example, satellite 0 can see the location at time slice 1, but it cannot see the location at time slice 4.
+Satellite usage and placement in a constellation is an interesting and geospatially adjacent issue which AQC can help with. Although it is inherently a geospatial issue with respect to observing a patch of the earth, the problem can be simplified into a QUBO as mentioned previously. The role of geospatial technologies and data is to provide intelligence into the input data. The example shown here does not use information about satellite orbits and periods, it simply assumes that a constellation of satellites can observe a location at a given time. Whether a satellite can observe a location is represented as simple binary, 1 for it can observe and 0 it cannot observe the location. Additionally, the temporal element is considered as slices, the matrix provides 5 time slices and the binary describes whether the satellite can view the location. For example, satellite 0 can see the location at time slice 1, but it cannot see the location at time slice 4.
 
 [cols="6"]
 |===
@@ -156,7 +156,7 @@ As the OGC is a standards body, understanding how the community can contribute t
 
 From an OGC Standards perspective, standardizing calls to an AQC is likely to be a profile or implementation OGC API - Processes. This paper does not attempt to create this profile, but here are some considerations for profiling or standardizing optimization of solutions to NP hard geospatial problems.
 
-* Binary Quadratic Model. The principle of a BQM is to store terms and one or two variables that have a relationship between them. Currently this is held as an array, but metadata could be introduced to describe the data and make it FAIR, or could be setup as a new datatype. A BQM is a generalized form of a QUBO, which a binary of 0 or 1 with the objective of the AQC to minimize the objective function. A BQM can also store an Ising model, which is like a QUBO except the parameters are between -1 and 1.
+* Binary Quadratic Model. The principle of a BQM is to store terms and one or two variables that have a relationship between them. Currently this is held as an array, but metadata could be introduced to describe the data and make it FAIR, or could be setup as a new datatype. A BQM is a generalized form of a QUBO, with a binary of 0 or 1 with the objective of the AQC to minimize the objective function. A BQM can also store an Ising model, which is like a QUBO except the parameters are between -1 and 1.
 * Solvers - AQCs use solvers to _run_ the problem. There are currently three types of solvers, simulated, QPU and hybrid.
 * Peripheral parameters - number of times to run the computation.
 * Return types - solutions or raw energy states. 
