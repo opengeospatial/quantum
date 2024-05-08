@@ -21,6 +21,8 @@ From the background and three use case areas discussed, here are some findings a
 
 * The OGC should consider the role standardization could play in quantum computing and quantum technologies more widely. A Domain Working Group (DWG) maybe palatable to support these emerging technologies.
 
+* OGC API - Processes is probably the closet fit to facade QC within the OGC suite of standards. There are several shortcomings with the current standard to support QC that are either already being addressed by extensions including _Deploy, Replace, Undeploy_, but may require abstraction to support different quantum computing approaches.
+
 
 == Conclusions
 

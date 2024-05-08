@@ -196,7 +196,7 @@ Below are two tables that outlines the API calls from both D-Wave and Amazon Bra
 
 As mentioned previously, D-Wave is a quantum annealer and bespoke to the D-Wave machines. Amazon Bracket is an Amazon service that abstracts access to multiple quantum computers with different capabilities and from different vendors.
 
-[cols=3]
+[cols=4]
 |===
 |Amazon Bracket Call|HTTP Verb|Description|OGC API Reference
 |CancelJob|PUT|Cancels a hybrid job|Dismiss
