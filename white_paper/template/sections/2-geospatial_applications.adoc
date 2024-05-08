@@ -154,6 +154,8 @@ Although this is quite an immature and simplified experiment, the costs, penalti
 
 As the OGC is a standards body, understanding how the community can contribute to standardization of quantum calls is discussed in this section. The work described in this paper has shown QC and specifically AQC to have current utility and future potential in optimizing geospatial problems. However, AQC is not a replacement for a technology and is likely to form part of a geospatial workflow rather than replace a geospatial workflow.
 
+Standardization efforts are underway in other standards bodies such as IEEE (https://standards.ieee.org/practices/foundational/quantum-standards-activities/), however, there does not appear to be active initiatives, standards, or progress towards standards in this example.
+
 From an OGC Standards perspective, standardizing calls to an AQC is likely to be a profile or implementation OGC API - Processes. This paper does not attempt to create this profile, but here are some considerations for profiling or standardizing optimization of solutions to NP hard geospatial problems.
 
 * Binary Quadratic Model. The principle of a BQM is to store terms and one or two variables that have a relationship between them. Currently this is held as an array, but metadata could be introduced to describe the data and make it FAIR, or could be setup as a new datatype. A BQM is a generalized form of a QUBO, with a binary of 0 or 1 with the objective of the AQC to minimize the objective function. A BQM can also store an Ising model, which is like a QUBO except the parameters are between -1 and 1.
@@ -162,3 +164,64 @@ From an OGC Standards perspective, standardizing calls to an AQC is likely to be
 * Return types - solutions or raw energy states. 
 
 Whether standardization is possible or desirable given the manner that AQCs work will become apparent as the technology matures and becomes adopted over time.
+
+=== Existing APIs for Quantum machines
+
+At time of writing, there are two accessible APIs for quantum computing, they are:
+
+* D-Wave Leap.
+* Amazon Bracket.
+
+These provide a basis and set of requirements for standardization approaches for using quantum solvers as part of an OGC API - Processes (_Processes_) deployment. Processes provides information about Jobs, Processes, Status, and many more relevant calls that could be used to facade quantum computing resources.
+
+Below are two tables that outlines the API calls from both D-Wave and Amazon Bracket. Their corresponding OGC API - Processes call is provided, or where this call might sit.
+
+[cols=4]
+|===
+|D-Wave API Call|HTTP Verb|Description|OGC API Reference
+|/bqm/multipart|POST|Initiate upload of a problem|DRU
+|/bqm/multipart/<problem_data_id>/part/<part>|PUT|Upload problem data|DRU
+|/bqm/multipart/<problem_data_id>/combine|POST|Submit a checksum for a problem upload|DRU
+|/bqm/multipart/<problem_data_id>/status|GET|Status of problem upload|DRU
+|/problems|POST|Submit problems|DRU
+|/problems|DELETE|Delete problems|Dismiss
+|/problems/<problem_id>|DELETE|Delete problem|Dismiss
+|/problems|GET|Retrieve a list of problems|Job info or process description
+|/problems/<problem_id>|GET|Retrieve a problem|Job info or Process Description
+|/problems/<problem_id>/info|GET|Retrieve problem info|Job status info
+|/problems/<problem_id>/answer|GET|Retrieve answers|callback/execute
+|/solvers/remote|GET|Retrieve available solvers|Process list
+|/solvers/remote/<solver_id>|GET|Retrieve solver info|Process info
+|===
+
+As mentioned previously, D-Wave is a quantum annealer and bespoke to the D-Wave machines. Amazon Bracket is an Amazon service that abstracts access to multiple quantum computers with different capabilities and from different vendors.
+
+[cols=3]
+|===
+|Amazon Bracket Call|HTTP Verb|Description|OGC API Reference
+|CancelJob|PUT|Cancels a hybrid job|Dismiss
+|CancelQuantumTask|PUT|Cancels the specified quantum task|Dismiss
+|CreateJob|POST|Create a hybrid job|DRU
+|CreateQuantumTask|POST|Create a quantum job|DRU
+|GetDevice|GET|Get Device Info|Unknown
+|GetJob|GET|Get Job info|Job Status Info
+|GetQuantumTask|GET|Get quantum task info|Job Status Info
+|ListTaskForResource|GET|Get tags associated with a task|Process Description
+|SearchDevices|POST|Search for devices using a filter|Unknown
+|SearchJobs|POST|Search for jobs using a filter|Unknown
+|SearchQuantumTasks|POST|Search for quantum tasks|Unknown
+|TagResource|POST|Tag a resource|DRU/unknown
+|UntagResource|DELETE|Untag a resource|DRU/unknown
+|===
+
+This paper does not attempt to extend or create a standard to manage interaction with quantum machines. However, there are elements of OGC API - Processes that could be changed or added to address the quantum use cases.
+
+==== OGC API - Processes suggestions to support quantum processes
+
+There are several elements that OGC API - Processes needs to support quantum computing. Some suggestions are transferrable to other use cases, such as abstracting over several machines with different capabilities, as with the different quantum machines hosted by Amazon Bracket.
+
+. The ability to support transaction for injection of new quantum algorithms and associated data is a requirement. Quantum is still in its infancy and therefore, there are many use cases and algorithms that have not been created or thought of.
+. Some APIs, particularly those that aggregate and offer multiple services such as Amazon Bracket require specification of quantum machines. Currently, OGC API - Processes offers a facade on one logical machine, with a set of processes. In quantum, the machines are not generalized, therefore specifying a machine is important.
+. Searching through jobs, processes, and devices should be supported natively in OGC API - Processes.
+. In the D-Wave approach, the datatype for quantum computing is a QUBO or BQM regardless of the use case or problem domain. Therefore there is a separation of data upload and solver that it is applied to, OGC API - Processes should support this interaction type.
+
