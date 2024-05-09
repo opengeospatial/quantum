@@ -20,3 +20,5 @@ Springer LNCS is widely used in technical and computer science journals and othe
 ===============================================
 
 * [[[OGC2015,OGCTB12]]], _OGC: OGC Testbed 12 Annex B: Architecture_ (2015).
+
+* [[[ref1, local-file(bib1, VanZyl2009)]]]
