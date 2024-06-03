@@ -1,0 +1,32 @@
+
+== Discussion
+
+The geospatial and space domains contain a multitude of optimization problems that QC can address in its current state with problem sizes increasing in the future. The work described in this discussion paper has provided some examples of where quantum optimization could be advantageous now. Although quantum computers are not powerful and coherent enough to provide a large uplift in processing power and an increase in speed, practical quantum computing is now possible for experimentation and future proofing. In terms of proving a quantum speed up, there are some clear use cases, especially in the logistics domain that have shown promising advantages to use quantum or hybrid solvers. The TSP demo involves routing 5 different drivers to satisfy delivery of multiple packages to different locations. This is a very hard problem for classical computers to solve as it involves multiple instantiations of TSP across multiple people. When directly compared to K-Means clustering, the quantum-hybrid algorithm saves around a quarter of the mileage. Likewise, clustering a knowledge graph or data sampling based upon pairwise comparison are also optimization problems where AQC can potentially assist. These types of gains in quantum optimization can make a difference to organizations as they currently stand.
+
+Creation and execution of quantum optimization problems can be reduced to either a BQM or a QUBO. These are useful constructs as having a generic approach to describing problems through generalized calls and abstracted data structures implies that standardization could be a useful exercise for geospatial optimization problems. It is not felt that standardization of calls or data structures related to quantum computing is currently required, as the community is largely experimental. It is also recognized that the OGC are a geospatial community focused on geospatial problems. Although geospatial provides an excellent set of use cases for quantum computing, it is recognized that there are many other communities that will have vested interests in QC and how it is tasked and accessed.
+
+Should the OGC or implementers wish to support quantum processing with an OGC API - Processes deployment, the existing standard supports most of the existing operations with a few notable exceptions that require transactions, which at time writing is under consideration with the Deploy, Replace, Undeploy work on going within the OGC API - Processes SWG. 
+
+
+== Recommendations
+
+From the background and three use case areas discussed, here are some findings are recommendations:
+
+* Quantum computing has a role to play in solving complex, geospatial optimization problems now and in the future. However, quantum computing is not a replacement for classical approaches and should be used as part of a workflow. Quantum computing should be integrated into more appropriate geospatial workflows.
+
+* There are many geospatial optimization problems can be solved using quantum with the potential to provide an advantage. A list of optimization use cases should be gathered from the geospatial community to focus further research into this emerging technology.
+
+* The immediate uplift in capability is likely to come through using a hybrid solver. The principle of using the hybrid is to task a classical computer with solving the problem that then executes the quantum computer on the user's behalf. This is a scalable approach to QC that is available now with reported use of millions of entities and hundreds of thousands of variables. The primary interaction with the D-Wave quantum computer should be the hybrid solver, as it enables quantum computing technologies to solve problems of a useful size potentially providing quantum advantage.
+
+* Quantum annealing cannot be treated as a generalized computing resource as it utilizes quantum tunnelling to find the optimal solution amongst many possible solutions, but cannot be applied to problems such as search, factoring large numbers, or machine learning algorithms (although it maybe used for sample selection).
+
+* The OGC should consider the role standardization could play in quantum computing and quantum technologies more widely. A Domain Working Group (DWG) maybe palatable to support these emerging technologies that would work closely with the OGC API - Processes SWG to ensure extensions to and version of the standard can support quantum processing.
+
+* OGC API - Processes is probably the closet fit to facade QC within the OGC suite of standards. There are several shortcomings with the current standard to support QC that are either already being addressed by extensions including _Deploy, Replace, Undeploy_, but may require abstraction to support different quantum computing approaches.
+
+
+== Conclusions
+
+Quantum computing and related quantum technologies such as cryptography and sensing have varying levels of maturity and have implications for the geospatial domain and standardization. This paper has sought to explore some of these possibilities through experimentation and integration with geospatial technologies to provide results with current quantum machines. The integration path is manageable, and optimization problems should be explored further as the hardware increases capability. Although quantum computers can be executed directly, a near term advantage is found through the use of _hybrid solvers_ which use both classical and quantum capabilities to manage larger problems than a QPU alone could manage.
+
+OGC API - Processes with a few amendments can be used to support QC and should be the target of any standardization effort going forwards.

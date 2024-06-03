@@ -1,0 +1,254 @@
+== Geospatial Applications
+:stem: 
+
+The OGC is a longstanding and premier standards body for the geospatial industry. With over 20 years of history, the OGC has been a thought leader in emerging technologies and whose standards have facilitated interoperability across IT enterprises and seen wide adoption in industry leading products and governmental organizations.
+
+As discussed in previous sections, the geospatial domain has many problems that maybe addressable by QC. For example, geospatial data has always been _large_, long before the concept of _big data_ and finding items with fast search algorithms has been a topic of interest for some time, especially when spatial operators are involved which increases the complexity. Beyond search is the concept of _optimization_, which is broadly the solving of complex computations to find the _best_ solution given a very large number of potential solutions. From a geospatial perspective this includes the following:
+
+. Routing - given the possibility of many routes, which is the optimal?
+. Optimal location planning - given a list of possible locations, where should I place my services to give the largest number of people access within a time constraint?
+. Geospatial relationships - given a list of locations, people, and relationships between them what patterns can be discerned?
+. Knowledge graphs - given a number of entities and relationships, what is the optimal path to get from _A_ to _B_ given _C_ and _d_?
+. Orbital mechanics and communications - what is the optimal constellation of satellites given these constraints? 
+. Data reduction and sampling. Given the wealth of data available (data deluge), can datasets be sampled to remove as much as possible whilst maintaining the heterogony and production of quality downstream outputs?
+
+Optimization problems are often transferrable to other, adjacent problems, and because many of these problems are well known and reducible to other problems, the programming required to express them in quantum terms is often reduced to a call to a server with parameters rather than starting from first principles.
+
+The following sections outline the general approach to AQC for solving optimization problems and some practical use cases that have been tested by integration of AQC into current geospatial software capabilities.
+
+== Computational difficulty of optimization problems
+
+Not all optimization problems are the same but they do have some commonalities, the main one being that there are many solutions to the problems stated and finding the correct (optimal) one is the challenge because of the number possible solutions available. Many optimization problems have a factorial (noted as n!) component within them. This means that for every layer of complexity, node, destination, relationship, or variable added to the problem makes finding the solution exponentially more complex. An often cited example is the number of possible calculations in a standard deck of 52 cards, this is clearly 52!. The result of this calculation is 8.1x10^67 possible combinations of a deck of 52 cards, the implication of this is that every single deck of cards that has every existed and will ever exist is likely a unique ordering of the deck (provided that it's shuffled thoroughly). 
+
+The _deck of cards_ example shows that even with a relatively small number of nodes problems can quickly become unfeasible for the classical computing approach. 
+
+== Optimization approaches
+
+Binary Quadratic Models (BQMs) are a general method of mathematically expressing optimization problems; the D-Wave system uses these extensively. The quantum approach to using BQMs is to express variables as a binary (0 or 1) and then focus on optimizing quadratic functions of these variables. A BQM represents the energy state of a system with the QC tasked with minimizing or maximizing the energy state depending on the problem expressed. Like a BQM, which can manage constrained and unconstrained variables, a Quadratic Unconstrained Binary Optimization (QUBO) maybe used when the problem space is open, however, the same principle applies with the AQC tasked with minimizing or maximizing the energy state to produce the solution, which is represented by the state of the machine when the optimization is completed.
+
+== Use Cases
+
+This section outlines five geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB), plugins for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the link:https://github.com/dwave-examples[integration exercises].
+
+All of the problems stated are _at least_ NP hard (from the famous P=NP consideration), with Traveling Salesperson Problem potentially being NP Complete according to some sources. This paper does not discuss the implications for NP completeness apart from to provide evidence that the optimization problems discussed are indeed _difficult_ for classical computers. 
+
+=== Traveling Salesperson Problem
+
+The Traveling Salesperson Problem (TSP) is typical in geospatial and logistics. There are different formulations, the one used in this experiment is as follows:
+
+. There is a salesperson with a known start location.
+. There are a number of locations that the salesperson must visit.
+. The solution is reached when the salesperson visits each of the locations once and only once in the lowest _cost_ possible.
+
+There are several ways to generate _cost_ which may include:
+
+* Straight line distance.
+* Drive time.
+* Road network distance.
+* Efficient fuel usage.
+
+Considering a _symmetrical_ cost matrix, that is, point A to point B costs the same to travel between as point B to point A, the mathematical formulation of the problem is as follows:
+
+stem:[(n-1!)/2]
+
+An asymmetrical cost matrix would have an even larger problem space as it would not have the divide by 2 in the formula. The result of this formula is that:
+
+* A 5 city problem has 12 possible routes.
+* A 10 city problem has 181,440 possible routes.
+* A 100 city problem has stem:[4.7x10^155] possible routes.
+
+As described, the number of possible routes quickly becomes unmanageable for classical computers to solve. Additionally this number of destinations maybe a problem with applicability in the real-world (considering large logistical operations such as Amazon). The problem becomes more challenging when the number of drivers also increases and the problem becomes allocation of drivers to deliveries _and_ the routing concerns with TSP.
+
+A caveat to this problem is that the comparison done is between the brute force version of the classical TSP algorithm (i.e., trying all of the combinations and picking the least cost). In logistics, there are many methods of solving this algorithm that are more efficient such as place aggregation, use of heuristics or other methods of reducing the problem to a manageable size. Therefore the overall utility of AQC in this space is left to the logistics domain experts to judge.
+
+==== TSP Algorithm preparation
+
+As TSP is a typical geospatial problem, D-Wave has a call that can be made to a quantum machine to solve TSP with the following parameters:
+
+* A cost matrix.
+* Configuration of the AQC (number of times to do the computation).
+
+As part of the experiment two cost matrices were generated, one using straight line distance and one using the road network.
+
+image::figures/TSP.jpg[]
+
+==== TSP Results
+
+The AQC was able to quickly compute the correct route for 5 cities but often failed with 8 cities. As the ADQ is non-deterministic and has some noise in the system, it occasionally produces invalid results such as visiting the same destination twice. When compared to the classical method of doing TSP, the quantum approach is orders of magnitude quicker showing promise for the technology in this space.
+
+image::figures/TSP2.jpg[]
+
+=== Structural Imbalance within a Graph
+
+Although not a strictly geospatial construct, the use of knowledge graphs in the geospatial domain and the OGC means that they can be used to represent geospatial information with one of the links between entities being locational _nearness_ or otherwise. This use case uses geospatial analytics to contextualize the results of the quantum output. In future work, location could be used as an input to this type of algorithm.
+
+The Structural Imbalance Problem (SIP) is a special case of the _maximum cut_ problem, which is a method of classifying graphs into two groups of vertices where the optimal solution is the one that maximizes the number of edges between the two groups. SIP seeks to classify graphs (usually social networks) using the rule _"the enemy of my friend is my enemy"_. This is a simplification of real social networks, as there are many instances when individual relationships are more complex than _enemy_ or _friend_, however it is useful for identifying those problematic relationships that go against how they _should_ behave according to the model. Additionally, the geography of those relationships can provide some insight into regional events and trends.
+
+The mathematical formulation of SIP is as follows:
+
+Minimize stem:[∑ (i,j)∈E-wij xi xj]
+
+This involves minimizing the objective function according to the positive (friendly) and negative (adversarial) relationships between the entities in the graph. The algorithm can result in two sets of results:
+
+. A perfectly balanced graph is one where all relationships between individuals within groups are friendly, and all relationships between groups are hostile.
+. An unbalanced graph is one where there are relationships within the graph that break the rule, that is, there are relationships that are friendly that should be hostile and hostile relationships that should be friendly.
+
+The relationships that break the friendly/hostile rules are considered _frustrated_.
+
+image::figures/RandJ1.jpg[]
+
+==== A simple Shakespearean Example
+
+A typical example for this type of problem is Romeo & Juliet. At the beginning of the play, the characters sit in a perfectly balanced graph, all of the Montague and Capulet families have positive relationships within their families, and all relationships between the individuals of the two families are negative. As the story progresses, a frustrated relationship emerges with the title characters. If the relationship between the title characters is updated to reflect their positive interactions and the algorithm is re-run, the relationship is flagged as being frustrated, the two characters are in a friendly relationship when they _should_ be hostile. This matters because these frustrated relationships can be a predictor of conflict as they are in this story, but also in real life examples.
+
+image::figures/RandJ_Graph.jpg[]
+
+image::figures/RandJgraph_class.jpg[]
+
+
+==== A real world geospatial example
+
+Applying SIP to geospatial use cases requires:
+
+. A geospatially enabled dataset.
+. A knowledge graph technology that can handle geospatial operators.
+
+An experiment was carried out using some world terrorist incident data provided by D-Wave. As with the TSP example, the objective of this piece of work was to integrate AQC and SIP with geospatial technologies to take advantage of geospatial intelligence with AQC to make some observations about patterns found in the data. A note on the parameters for the data is that the dataset was considered as a whole and not split regionally, which is something that could be done in a real world scenario. Additionally, due to the large number of data points, the problem set is too large for the QPU alone and a _hybrid solver_ was used instead. Hybrid solvers, as the name suggests, use a combination of classical and quantum technologies to solve larger problems than a pure QPU could do alone. In this scenario, a classical computer executes the quantum computer on behalf of the user to make best use of both technologies. 
+
+image::figures/terrorism.jpg[]
+
+In the image above, the red lines show relationships that are hostile, but should be friendly, and the green lines show relationships that are friendly, but should be hostile. Although the grouping created by the AQC are arbitrary, as the dataset has an unconsidered temporal element, it does highlight areas of the world with many frustrated relationships. The Middle East region is particularly challenging with many frustrated relationships that can be a source of conflict.
+
+=== Spatial dataset sampling
+
+With many organizations choosing to make use of cloud facilities, cost of compute and storage is a consideration for cloud strategy and deployment. There are different approaches to this, whether choices are made to keep on-premise infrastructure, often for cost and sovereignty reasons, or to go fully to the cloud, or some hybrid solution where appropriate services are held on-premise and others moved to the cloud. Regardless of the approach, using the cloud requires  in a different cost model to on-premise _tin_, as the cloud is a metered service, and on premises compute is a capital expenditure that depreciates over time. 
+
+Machine learning and use of Graphical Processing Units (GPU) is a rapid method of building and training machine learning models. ML requires a lot of data to create good models, however, not all data points are critical to the success of the model building process. Appropriate sampling can reduce the amount of data required for machine learning models whilst retaining the explanatory and powerful elements of the model. A reduction in the data required for model building can result in lower cloud costs (as well as compute time and it's implications for environmental concerns).
+
+This type of data sampling requires that the most explanatory data points are kept and the others discarded for processing. In geospatial data, a simple use case is location and difference.
+
+==== Geospatial sampling selection
+
+Geospatial data has always been big, complex, multidimensional and challenging to manage. Sampling and selection is one method of reducing data, however, calculating similarity between geospatial locations can be approached using a _Haversine function_. This method determines the great circle distance between two points given their latitude and longitude. To perform sample selection using AQC, a matrix is created using the Haversine function to compare each position with every other position. Once the matrix is created, which is admittedly a computationally expensive task, QC can be used to down select the dataset to a sample containing the variables that are most _different_.
+
+The QC algorithm works utilizes a _penalty_ coefficient and a global subset size constraint to achieve the results. In this example, the global subset size was 15, which means that from the sample of 2000 points, the QC is encouraged to select the top 15 most representative points.
+
+The dataset used is a set of randomly generated points around Oxford in the UK. The purpose of the exercise is to reduce the number of points to a representative sample using a hybrid solver within the D-Wave quantum computer.
+
+==== Geospatial sampling results
+
+The dataset contained 2000 points and the algorithm was configured to reduce the points to 10%. The results are below. The original data sample is displayed in green and the reduction by quantum algorithm is in red.
+
+image::figures/Spatial_Sampling.png[]
+
+Other examples were attempted with different levels of remaining samples, however, there were occasions where the algorithm did not appear to give a representative sample by biasing points in a clustered geographic region. The reasons for this are unknown at time of writing, but more experimentation is required.
+
+Overall, data sampling is a promising application for quantum technologies, and geospatial sampling problems are a suitable use case.
+
+=== Satellite configuration
+
+As optimization can be applied to typical geospatial operations, they can also be applied to any domain where there is a problem with many correct solutions but one being optimal.
+
+Organization, monitoring and controlling satellites whilst taking note of other orbital objects such as space debris contains many optimization problems. Conceptually there are many ways to configure a constellation to achieve certain goals, but there is an optimal solution. Some satellite optimization problems that could be solved using AQC are as follows:
+
+* Coverage Optimization: Ensuring maximum coverage of specific areas on Earth.
+* Communication Links: Maximizing the efficiency of communication links between satellites.
+* Fuel Efficiency: Minimizing fuel consumption for maneuvers.
+* Redundancy and Resilience: Ensuring the constellation can withstand the failure of one or more satellites.
+
+The example described in this Section has a combination of coverage optimization and redundancy and resilience, however, the parameters could be changed and weighted to favor one element over another if _real_ data were being used.
+
+==== Satellite constellation placement optimization
+
+Satellite usage and placement in a constellation is an interesting and geospatially adjacent issue which AQC can help with. Although it is inherently a geospatial issue with respect to observing a patch of the earth, the problem can be simplified into a QUBO as mentioned previously. The role of geospatial technologies and data is to provide intelligence into the input data. The example shown here does not use information about satellite orbits and periods, it simply assumes that a constellation of satellites can observe a location at a given time. Whether a satellite can observe a location is represented as simple binary, 1 for it can observe and 0 it cannot observe the location. Additionally, the temporal element is considered as slices, the matrix provides 5 time slices and the binary describes whether the satellite can view the location. For example, satellite 0 can see the location at time slice 1, but it cannot see the location at time slice 4.
+
+[cols="6"]
+|===
+|Satellite | Time Slice 1 | Time Slice 2 | Time Slice 3 | Time Slice 4 | Time Slice 5
+|0|1|0|1|0|1
+|1|0|1|0|1|0
+|2|1|1|0|1|0
+|===
+
+An additional concern with this is that there is a cost associated with not observing the location and equally, there is a cost associated with making changes to a satellite. The model seeks to balance the cost of not observing the location at a time with the cost of operating the satellite, it then selects the satellites to use from within the constellation to the monitoring.
+
+In the above example, requiring a coverage of 2, that is, the geographic area should be observed by at least two satellites at the required time slice given the penalty for _not_ observing the location, and the cost of using the satellite. If we run this using the QC, the algorithm reports that satellites 0 and 1 are required. If we up the coverage requirement to 3, then the algorithm reports that all of the satellites are required. After proving the concept, a further experiment was conducted using 25 satellites and 10 time slices. Again, by manipulating the penalties and costs for satellite coverage and usage respectively, solutions were generated that included most, many, some and a single satellite depending on the requirements.
+
+Although this is quite an immature and simplified experiment, the costs, penalties and use of coverage variables have real-world applications that can optimize satellite constellation coverage. This is particularly salient with respect to the new, small satellites such as Starlink being launched as well as cubesats and other low weight, low cost devices being put into orbit. The next step in this experimentation is to use _real_ satellite data including costs and penalties to create a constellation and then measure the constellation against the existing constellations.
+
+
+== Potential Standardization Routes
+
+As the OGC is a standards body, understanding how the community can contribute to standardization of quantum calls is discussed in this section. The work described in this paper has shown QC and specifically AQC to have current utility and future potential in optimizing geospatial problems. However, AQC is not a replacement for a technology and is likely to form part of a geospatial workflow rather than replace a geospatial workflow.
+
+Standardization efforts are underway in other standards bodies such as link:https://standards.ieee.org/practices/foundational/quantum-standards-activities/[IEEE], however, there does not appear to be active initiatives, standards, or progress towards standards in this example.
+
+From an OGC Standards perspective, standardizing calls to an AQC is likely to be a profile or implementation OGC API - Processes. This paper does not attempt to create this profile, but here are some considerations for profiling or standardizing optimization of solutions to NP hard geospatial problems.
+
+* Binary Quadratic Model. The principle of a BQM is to store terms and one or two variables that have a relationship between them. Currently this is held as an array, but metadata could be introduced to describe the data and make it FAIR, or could be setup as a new datatype. A BQM is a generalized form of a QUBO, with a binary of 0 or 1 with the objective of the AQC to minimize the objective function. A BQM can also store an Ising model, which is like a QUBO except the parameters are between -1 and 1.
+* Solvers - AQCs use solvers to _run_ the problem. There are currently three types of solvers, simulated, QPU and hybrid.
+* Peripheral parameters - number of times to run the computation.
+* Return types - solutions or raw energy states. 
+
+Whether standardization is possible or desirable given the manner that AQCs work will become apparent as the technology matures and becomes adopted over time.
+
+=== Existing APIs for Quantum machines
+
+At time of writing, there are two accessible APIs for quantum computing, they are:
+
+* D-Wave Leap.
+* Amazon Bracket.
+
+These provide a basis and set of requirements for standardization approaches for using quantum solvers as part of an OGC API - Processes (_Processes_) deployment. Processes provides information about Jobs, Processes, Status, and many more relevant calls that could be used to facade quantum computing resources.
+
+Below are two tables that outlines the API calls from both D-Wave and Amazon Bracket. Their corresponding OGC API - Processes call is provided, or where this call might sit.
+
+[cols=4]
+|===
+|D-Wave API Call|HTTP Verb|Description|OGC API Reference
+|/bqm/multipart|POST|Initiate upload of a problem|Deploy, Replace, Undeploy (DRU)
+|/bqm/multipart/<problem_data_id>/part/<part>|PUT|Upload problem data|DRU
+|/bqm/multipart/<problem_data_id>/combine|POST|Submit a checksum for a problem upload|DRU
+|/bqm/multipart/<problem_data_id>/status|GET|Status of problem upload|DRU
+|/problems|POST|Submit problems|DRU
+|/problems|DELETE|Delete problems|Dismiss
+|/problems/<problem_id>|DELETE|Delete problem|Dismiss
+|/problems|GET|Retrieve a list of problems|Job info or process description
+|/problems/<problem_id>|GET|Retrieve a problem|Job info or Process Description
+|/problems/<problem_id>/info|GET|Retrieve problem info|Job status info
+|/problems/<problem_id>/answer|GET|Retrieve answers|callback/execute
+|/solvers/remote|GET|Retrieve available solvers|Process list
+|/solvers/remote/<solver_id>|GET|Retrieve solver info|Process info
+|===
+
+As mentioned previously, D-Wave is a quantum annealer and bespoke to the D-Wave machines. Amazon Bracket is an Amazon service that abstracts access to multiple quantum computers with different capabilities and from different vendors. 
+
+[cols=4]
+|===
+|Amazon Bracket Call|HTTP Verb|Description|OGC API Reference
+|CancelJob|PUT|Cancels a hybrid job|Dismiss
+|CancelQuantumTask|PUT|Cancels the specified quantum task|Dismiss
+|CreateJob|POST|Create a hybrid job|DRU
+|CreateQuantumTask|POST|Create a quantum job|DRU
+|GetDevice|GET|Get Device Info|Unknown
+|GetJob|GET|Get Job info|Job Status Info
+|GetQuantumTask|GET|Get quantum task info|Job Status Info
+|ListTaskForResource|GET|Get tags associated with a task|Process Description
+|SearchDevices|POST|Search for devices using a filter|Unknown
+|SearchJobs|POST|Search for jobs using a filter|Unknown
+|SearchQuantumTasks|POST|Search for quantum tasks|Unknown
+|TagResource|POST|Tag a resource|DRU/unknown
+|UntagResource|DELETE|Untag a resource|DRU/unknown
+|===
+
+This paper does not attempt to extend or create a standard to manage interaction with quantum machines. However, there are elements of OGC API - Processes that could be changed or added to address the quantum use cases.
+
+==== OGC API - Processes suggestions to support quantum processes
+
+There are several elements that OGC API - Processes needs to support quantum computing. Some suggestions are transferrable to other use cases, such as abstracting over several machines with different capabilities, as with the different quantum machines hosted by Amazon Bracket.
+
+. The ability to support transaction for injection of new quantum algorithms and associated data is a requirement. Quantum is still in its infancy and therefore, there are many use cases and algorithms that have not been created or thought of.
+. Some APIs, particularly those that aggregate and offer multiple services such as Amazon Bracket require specification of quantum machines. Currently, OGC API - Processes offers a facade on one logical machine, with a set of processes. In quantum, the machines are not generalized, therefore specifying a machine is important.
+. Searching through jobs, processes, and devices should be supported natively in OGC API - Processes.
+. In the D-Wave approach, the datatype for quantum computing is a QUBO or BQM regardless of the use case or problem domain. Therefore there is a separation of data upload and solver that it is applied to, OGC API - Processes should support this interaction type.
+
