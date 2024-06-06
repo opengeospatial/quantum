@@ -20,9 +20,7 @@
 :comment: ### Date on which the standard was published; mandatory
 :published-date: 2029-03-30
 :comment: ### Author one
-:fullname: Editor One
-:comment: ### Author two
-:fullname_2: Editor Two
+:fullname: Sam Meek
 :comment: ### Role of the authors; mandatory
 :role: editor
 :comment: ### Comma delimited keywords; mandatory
