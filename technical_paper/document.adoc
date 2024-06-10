@@ -12,7 +12,7 @@
 :comment: ### External link referencing the document; optional. If not provided, a default value is created following this structure: "http://www.opengis.net/doc/{abbrevation of doctype}/{abbrev}/{version}"
 :external-id: http://www.opengis.net/doc/WP/bigdata
 :comment: ### Internal reference number; mandatory
-:docnumber: YY-999
+:docnumber: 24-027
 :comment: ### Date on which the standard was updated; mandatory
 :received-date: 2029-03-30
 :comment: ### Date on which the standard was approved by the issuing authority; mandatory
@@ -24,9 +24,9 @@
 :comment: ### Role of the authors; mandatory
 :role: editor
 :comment: ### Comma delimited keywords; mandatory
-:keywords: ogcdoc, OGC document, API, openapi, html
+:keywords: ogcdoc, OGC document, OGC Discussion Paper, Quantum Computing, Optimization
 :comment: ### Semicolon-delimited list of the submitting organizations; mandatory
-:submitting-organizations: Organization one; Organization two; Organization three
+:submitting-organizations: Helyx SIS
 :comment: ### Metanorma flavor; mandatory
 :mn-document-class: ogc
 :comment: ### Desired output formats; mandatory
@@ -46,7 +46,7 @@ include::sections/clause_0_front_material.adoc[]
 include::sections/1-intro.adoc[]
 include::sections/2-geospatial_applications.adoc[]
 include::sections/3-recommendations_conclusions.adoc[]
-include::sections/clause_1.adoc[]
+// include::sections/clause_1.adoc[]
 
 //use annexes as needed
 include::sections/annex-n.adoc[]
@@ -57,4 +57,4 @@ Bibliography should be the last annex
 ////
 include::sections/annex-history.adoc[]
 
-include::sections/annex-bibliography.adoc[]
+//include::sections/annex-bibliography.adoc[]
