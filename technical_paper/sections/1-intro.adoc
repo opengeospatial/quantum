@@ -4,7 +4,7 @@ This discussion paper is concerned with the topic of quantum computing (QC) and 
 
 The work described in this paper has a duel focus; there are genuine experiments testing new ways to task a QC such as in the space domain or data sampling, and integration of quantum technologies into an existing geospatial enterprise. Part of the motivation for the integration focus is the pace of technological change and specifically, the rise of technologies such as ChatGPT and LLMs in general which came to public prominence almost overnight. Some of the integration related questions posited are as follows:
 
-* What if QC has it's _ChatGPT moment?_ 
+* What if QC has its _ChatGPT moment?_ 
 * What could QC be used for in the geospatial domain?  
 * What, if any, are the advantages of using QC in the geospatial domain either now or in the future?
 * What is the integration path for QC with existing geospatial technologies? 

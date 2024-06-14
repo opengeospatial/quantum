@@ -1,4 +1,4 @@
-= The applicability of using quantum computing to solve geospatial optimization problems
+= How can current quantum computers be used to solve geospatial optimization problems?
 :comment: ### Document type; mandatory. Visit: https://www.metanorma.org/author/ogc/authoring/ for permitted types
 :doctype: discussion-paper
 :comment: ### Language of the document; mandatory. Specified in two-letter code: "en" for English, "fr" for French
