@@ -49,7 +49,7 @@ include::sections/3-recommendations_conclusions.adoc[]
 // include::sections/clause_1.adoc[]
 
 //use annexes as needed
-include::sections/annex-n.adoc[]
+//include::sections/annex-n.adoc[]
 
 ////
 Revision History should be the last annex before the Bibliography

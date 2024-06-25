@@ -76,8 +76,6 @@ image::figures/TSP.jpg[]
 
 The AQC was able to quickly compute the correct route for 5 cities but often failed with 8 cities. As the ADQ is non-deterministic and has some noise in the system, it occasionally produces invalid results such as visiting the same destination twice. When compared to the classical method of doing TSP, the quantum approach is orders of magnitude quicker showing promise for the technology in this space.
 
-image::figures/TSP2.jpg[]
-
 === Structural Imbalance within a Graph
 
 Although not a strictly geospatial construct, the use of knowledge graphs in the geospatial domain and the OGC means that they can be used to represent geospatial information with one of the links between entities being locational _nearness_ or otherwise. This use case uses geospatial analytics to contextualize the results of the quantum output. In future work, location could be used as an input to this type of algorithm.
