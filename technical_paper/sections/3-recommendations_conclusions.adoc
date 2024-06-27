@@ -20,7 +20,7 @@ From the background and three use case areas discussed, here are some findings a
 
 * Quantum annealing cannot be treated as a generalized computing resource as it utilizes quantum tunnelling to find the optimal solution amongst many possible solutions, but cannot be applied to problems such as search, factoring large numbers, or machine learning algorithms (although it maybe used for sample selection).
 
-* The OGC should consider the role standardization could play in quantum computing and quantum technologies more widely. A Domain Working Group (DWG) maybe palatable to support these emerging technologies that would work closely with the OGC API - Processes SWG to ensure extensions to and version of the standard can support quantum processing.
+* The OGC should consider the role standardization could play in quantum computing and quantum technologies more widely. A quantum _standard_ from the OGC is not recommended at this time. However, quantum processing can be supported by the OGC API - Processes SWG to ensure extensions to and version of the standard can support quantum processing.
 
 * OGC API - Processes is probably the closet fit to facade QC within the OGC suite of standards. There are several shortcomings with the current standard to support QC that are either already being addressed by extensions including _Deploy, Replace, Undeploy_, but may require abstraction to support different quantum computing approaches.
 
