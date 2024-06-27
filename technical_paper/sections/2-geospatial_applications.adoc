@@ -10,7 +10,7 @@ As discussed in previous sections, the geospatial domain has many problems that 
 . Geospatial relationships - given a list of locations, people, and relationships between them what patterns can be discerned?
 . Knowledge graphs - given a number of entities and relationships, what is the optimal path to get from _A_ to _B_ given _C_ and _d_?
 . Orbital mechanics and communications - what is the optimal constellation of satellites given these constraints? 
-. Data reduction and sampling. Given the wealth of data available (data deluge), can datasets be sampled to remove as much as possible whilst maintaining the heterogony and production of quality downstream outputs?
+. Data reduction and sampling. Given the wealth of data available (data deluge), can datasets be sampled to remove as much as possible whilst maintaining the heterogeneity and production of quality downstream outputs?
 
 Optimization problems are often transferrable to other, adjacent problems, and because many of these problems are well known and reducible to other problems, the programming required to express them in quantum terms is often reduced to a call to a server with parameters rather than starting from first principles.
 
@@ -28,9 +28,11 @@ Binary Quadratic Models (BQMs) are a general method of mathematically expressing
 
 == Use Cases
 
+An overall use case for QC (adiabatic or circuit based) is to solve _NP hard_ or _NP complete_ problems. These two concepts are from the famous, unsolved computer science problem of whether stem:[P=NP]? In this equation, the concept _P_ stands for _polynomial time_, in computational terms if a problem is _P_, then it is relatively easy for a classical computer to solve. _NP_ stands for _non-deterministic polynomial time_, problems that are _NP_ are ones that given a solution, can be verified quickly on a classical computer. If stem:[P=NP] then every problem that can be quickly verified can be quickly solved, if stem:[P!=NP] then there are some problems where finding the solution is difficult, but verifying the solution is easy. In summary, the question asks whether problems that are quick to verify are also quick to solve and they just have not been discovered. Some problems can be described as _NP-hard_ or _NP-complete_. NP-hard problems are those that are the toughest for computers to solve, NP-complete problems are those that are both NP-hard, and can be verified quickly. An interesting property of NP-complete problems is that if one is solved, they can all be solved. 
+
 This section outlines five geospatially relevant optimization problems that have been tested using D-Wave's quantum annealer. Each use case contains a description of the problem, the approach to sending the problem to the AQC, the results returned and the issues encountered. The AQC was cloud based and could be executed provided the local machine had internet connectivity. For the first two use cases (TSP, SIB), plugins for Esri ArcGIS Pro were created to ensure integration of QC within a geospatial workflow. Additionally, each of the use cases described were created from examples on the D-Wave website as a starting point for the link:https://github.com/dwave-examples[integration exercises].
 
-All of the problems stated are _at least_ NP hard (from the famous P=NP consideration), with Traveling Salesperson Problem potentially being NP Complete according to some sources. This paper does not discuss the implications for NP completeness apart from to provide evidence that the optimization problems discussed are indeed _difficult_ for classical computers. 
+All of the problems stated are _at least_ NP hard, with Traveling Salesperson Problem potentially being NP Complete according to some sources. This paper does not discuss the implications for NP completeness apart from to provide evidence that the optimization problems discussed are indeed _difficult_ for classical computers. 
 
 === Traveling Salesperson Problem
 
@@ -127,7 +129,7 @@ This type of data sampling requires that the most explanatory data points are ke
 
 ==== Geospatial sampling selection
 
-Geospatial data has always been big, complex, multidimensional and challenging to manage. Sampling and selection is one method of reducing data, however, calculating similarity between geospatial locations can be approached using a _Haversine function_. This method determines the great circle distance between two points given their latitude and longitude. To perform sample selection using AQC, a matrix is created using the Haversine function to compare each position with every other position. Once the matrix is created, which is admittedly a computationally expensive task, QC can be used to down select the dataset to a sample containing the variables that are most _different_.
+Geospatial data has always been big, complex, multidimensional and challenging to manage. Sampling and selection is one method of reducing data, however, calculating similarity between geospatial locations can be approached using a _Haversine function_. This method determines the great circle distance between two points given their latitude and longitude. To perform sample selection using AQC, a matrix is created using the Haversine function to compare each position with every other position. Once the matrix is created, which is admittedly a computationally expensive task, QC can be used to filter the dataset to a sample containing the variables that are most _different_.
 
 The QC algorithm works utilizes a _penalty_ coefficient and a global subset size constraint to achieve the results. In this example, the global subset size was 15, which means that from the sample of 2000 points, the QC is encouraged to select the top 15 most representative points.
 
