@@ -5,4 +5,5 @@
 |===
 |Date |Release |Editor | Primary clauses modified |Description
 |2024-06-14 |0.1 |S.Meek |all |initial version
+|2024-27-06 |1.0 |S.Meek |all |Version 1.0
 |===
