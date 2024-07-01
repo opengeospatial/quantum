@@ -37,7 +37,7 @@
 :pdf-uri: ./document.pdf
 :relaton-data-source-bib1: bibtex-file.bib
 :comment: ### Version number; optional. Dot-delimited, preferably with this structure <version number>.<minor version number>
-:edition: 1.0
+:edition:
 
 ////
 Make sure to complete each included document
