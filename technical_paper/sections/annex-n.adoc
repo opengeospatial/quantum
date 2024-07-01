@@ -1,6 +1,7 @@
 [appendix]
 :appendix-caption: Annex
 == List of Acronyms
+ 
 AQC     Adiabatic Quantum Computing
 BQM     Binary Quadratic Model
 QC      Quantum Computing
@@ -10,5 +11,3 @@ SDK     Software Development Kit
 SIP     Structural Imbalance Problem
 TSP     Traveling Salesperson Problem
 
-[NOTE]
-Place other Annex material in sequential annexes beginning with "A" and leave final two annexes for the Revision History and Bibliography
