@@ -2,12 +2,12 @@
 :appendix-caption: Annex
 == List of Acronyms
  
-AQC     Adiabatic Quantum Computing
-BQM     Binary Quadratic Model
-QC      Quantum Computing
-OGC     Open Geospatial Consortium
-QUBO    Quadratic Unconstrained Binary Object 
-SDK     Software Development Kit
-SIP     Structural Imbalance Problem
-TSP     Traveling Salesperson Problem
+AQC     Adiabatic Quantum Computing +
+BQM     Binary Quadratic Model +
+QC      Quantum Computing +
+OGC     Open Geospatial Consortium +
+QUBO    Quadratic Unconstrained Binary Object +
+SDK     Software Development Kit +
+SIP     Structural Imbalance Problem +
+TSP     Traveling Salesperson Problem 
 
